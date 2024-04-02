@@ -1,6 +1,7 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "../../utils/cn";
+import { NavLink } from "react-router-dom";
 
 export const FloatingNav = ({ navItems, className }) => {
   return (
@@ -16,17 +17,17 @@ export const FloatingNav = ({ navItems, className }) => {
         )}
       >
         {navItems.map((navItem, idx) => (
-          <a
+          <NavLink
             key={`link-${idx}`}
-            href={navItem.link}
+            to={navItem.link}
             className={cn(
               "relative dark:text-[#6fe7f7] items-center flex space-x-1 text-neutral-400 dark:hover:text-neutral-300 hover:text-[#6fe7f7]"
             )}
           >
-            <span className="block sm:hidden">{navItem.icon}</span>
-            <span className="hidden sm:block text-sm">{navItem.name}</span>
-            <span className="hidden sm:block text-sm">{navItem.ConnectWallet}</span>
-          </a>
+            <span className="block sm:hidden ">{navItem.icon}</span>
+            <span className="hidden sm:block text-sm ">{navItem.name}</span>
+            <span className="hidden sm:block text-sm ">{navItem.ConnectWallet}</span>
+          </NavLink>
         ))}
         {/* <button className="border text-sm font-medium relative border-neutral-200 dark:border-white/[0.2] text-black dark:text-white px-4 py-2 rounded-full"> */}
           {/* <span className="hidden sm:block text-sm">Login</span> */}
