@@ -2,7 +2,7 @@ import React from "react";
 import { LampContainer } from "./components/ui/lamp";
 import { FloatingNav } from "../src/components/ui/floating-navbar";
 import { IconHome, IconMessage, IconUser } from "@tabler/icons-react";
-import WalletIcon from "C:/Users/Prakhar Srivastava/OneDrive/Desktop/ProjectPractice/Test1/public/wallet-svgrepo-com.svg";
+import WalletIcon from "/public/wallet-svgrepo-com.svg";
 import Spline from '@splinetool/react-spline';
 
 function LampDemo() {

@@ -1,6 +1,6 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { cn } from "C:/Users/Prakhar Srivastava/OneDrive/Desktop/ProjectPractice/Test1/src/utils/cn";
+import { cn } from "../../utils/cn";
 
 export const FloatingNav = ({ navItems, className }) => {
   return (
