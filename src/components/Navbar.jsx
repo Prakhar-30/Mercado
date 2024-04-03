@@ -4,8 +4,7 @@ import { cn } from "../utils/cn";
 import { IconHome, IconMessage, IconUser } from "@tabler/icons-react";
 import WalletIcon from "/public/wallet-svgrepo-com.svg";
 import { NavbarItem } from "./NavbarItem";
-import { ConnectButton } from "thirdweb/react";
-import { client } from "../App";
+
 
 const navItems = [
   {
@@ -23,18 +22,6 @@ const navItems = [
     link: "/contact",
     icon: <IconMessage className="h-4 w-4 text-neutral-500 dark:text-white" />,
   },
-  // {
-  //   name: "connectWallet",
-  //   link: "/wallet",
-  //   icon: (
-  //     <img
-  //       src={WalletIcon}
-  //       alt="Wallet"
-  //       className="h-4 w-4 text-neutral-500 dark:text-white"
-  //     />
-      
-  //   ),
-  // },
 ];
 
 export const Navbar = ({ className }) => {
@@ -53,28 +40,6 @@ export const Navbar = ({ className }) => {
         {navItems.map((navItem) => (
           <NavbarItem navItem={navItem} key={navItem.name} />
         ))}
-        {/* <button className="border text-sm font-medium relative border-neutral-200 dark:border-white/[0.2] text-black dark:text-white px-4 py-2 rounded-full"> */}
-        {/* <span className="hidden sm:block text-sm">Login</span> */}
-        {/* <span className="absolute inset-x-0 w-1/2 mx-auto -bottom-px bg-gradient-to-r from-transparent via-blue-500 to-transparent h-px" /> */}
-        {/* </button> */}
-        <ConnectButton 
-          client={client}
-          autoConnect={{ timeout: 10000 }}
-          theme="dark"
-          connectModal={{
-            title: "Sign In with your wallet",
-            description: "Sign In with your wallet",
-            
-          }}
-          showThirdwebBranding={false}
-          onConnect={()=>{
-              alert("Connected")
-            
-          }}
-          
-        
-         
-        />
       </motion.div>
     </AnimatePresence>
   );
