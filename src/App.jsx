@@ -2,7 +2,7 @@ import React from "react";
 import { ThirdwebProvider } from "thirdweb/react";
 import { LampDemo } from "./components/LampDemo";
 import { Navbar } from "./components/Navbar";
-// import { Home } from "./Pages/Home";
+import { Home } from "./Pages/Home";
 import { createThirdwebClient, getContract, resolveMethod } from "thirdweb";
 // import { sepolia } from "thirdweb/chains";
 import ConnectWalletButton from "./components/ConectButton";
@@ -26,8 +26,9 @@ function App() {
       client={client}
     >
     <div>
-      <Navbar />
-      <LampDemo />
+      {/* <Navbar />
+      <LampDemo /> */}
+      <Home />
       <ConnectWalletButton />
 
     </div>
