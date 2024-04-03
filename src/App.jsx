@@ -3,6 +3,8 @@ import { ThirdwebProvider } from "thirdweb/react";
 import { LampDemo } from "./components/LampDemo";
 import { Navbar } from "./components/Navbar";
 import { createThirdwebClient, getContract, resolveMethod } from "thirdweb";
+import { BrowserRouter , Routes,Route } from "react-router-dom";
+import Shop from "./web3/pages/Shop";
 // import { sepolia } from "thirdweb/chains";
 
 
@@ -24,10 +26,18 @@ function App() {
     <ThirdwebProvider 
       client={client}
     >
+   
     <div>
       <Navbar />
-      <LampDemo />
+      <Routes>
+        <Route path="/" element={<LampDemo />} />
+        <Route path="/about" element={<LampDemo />} />
+        <Route path="/contact" element={<LampDemo />} />
+        <Route path="/shop" element={<Shop />} />
+      </Routes>
+      
     </div>
+    
     </ThirdwebProvider>
   );
 }

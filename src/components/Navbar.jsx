@@ -67,6 +67,10 @@ export const Navbar = ({ className }) => {
             
           }}
           showThirdwebBranding={false}
+          onConnect={()=>{
+              alert("Connected")
+            
+          }}
           
         
          
