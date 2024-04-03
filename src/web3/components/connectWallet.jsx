@@ -8,10 +8,12 @@ const wallets = [
   createWallet("me.rainbow"),
 ];
 
-function Example() {
+function connectWallet() {
   return (
     <div>
       <ConnectButton client={client} wallets={wallets} />
     </div>
   );
 }
+
+export default connectWallet;
