@@ -1,15 +1,15 @@
 import React from "react";
-// import { LampDemo } from "./components/LampDemo";
-// import { Navbar } from "./components/Navbar";
-import { Home } from "./Pages/Home";
+import { LampDemo } from "./components/LampDemo";
+import { Navbar } from "./components/Navbar";
+// import { Home } from "./Pages/Home";
 
 function App() {
   return (
     <div>
-      {/* <Navbar />
+      <Navbar />
       
-      <LampDemo /> */}
-      <Home />
+      <LampDemo />
+
     </div>
   );
 }
