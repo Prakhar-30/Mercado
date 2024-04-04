@@ -21,7 +21,7 @@ export const client = createThirdwebClient({
 //   chain: sepolia, 
 //   address: "0x..."
 // });
-//9wEdbyUSM80crdJwxUoRVUSmEwDXOvNJxVYW3ypP552qSDwpxxprAblKpSc1E_Rs5O3BnKNGgNBqNIR_mtJbSQ --Thirdweb Api secret key
+
 
 window.ethereum.on("accountsChanged", (accounts) => {
   // reload the page to get the latest account
