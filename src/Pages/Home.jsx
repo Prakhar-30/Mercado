@@ -41,7 +41,7 @@ export function Home() {
       >
         <Navbar />
 
-        <div className="flex justify-between mt-56">
+        <div className="flex justify-between mt-44">
           <div className="text-slate-400 text-7xl p-8 ml-24 mr-60">
             Welcome to Mercado, where the future is yours to own.
           </div>
