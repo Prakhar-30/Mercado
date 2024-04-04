@@ -32,7 +32,7 @@ export function Home() {
         </div>
       </div>
 
-      <div class="text-slate-400 text-6xl text-center mt-10 border border-slate-600 rounded-3xl pt-32 pb-32 mb-6 ml-1 mr-1">
+      <div class="text-slate-400 text-6xl text-center mt-10 border border-slate-600 rounded-3xl pt-32 pb-32 pl-2 pr-2 mb-6 ml-1 mr-1">
         Unlock the potential of digital ownership with Mercado
       </div>
 
