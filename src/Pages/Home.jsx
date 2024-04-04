@@ -64,7 +64,7 @@ export function Home() {
         </div>
       </div>
 
-      <div className="Details">
+      <div className="Details p-2">
   <div className="flex justify-end">
     <div className="text-slate-400 text-8xl mt-20 min-w-full text-right mr-8">
       Creators

@@ -40,7 +40,6 @@ export const Navbar = ({ className }) => {
         {navItems.map((navItem) => (
           <NavbarItem navItem={navItem} key={navItem.name} />
         ))}
-
       </motion.div>
     </AnimatePresence>
   );
