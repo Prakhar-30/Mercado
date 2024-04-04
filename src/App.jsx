@@ -6,21 +6,11 @@ import { Home } from "./Pages/Home";
 import { createThirdwebClient, getContract, resolveMethod } from "thirdweb";
 import { BrowserRouter , Routes,Route } from "react-router-dom";
 import Shop from "./web3/pages/Shop";
-// import { sepolia } from "thirdweb/chains";
 import ConnectWalletButton from "./components/ConectButton";
 import CreateNFT from "./web3/pages/CreateNFT";
-// create the client with your clientId, or secretKey if in a server environment
 export const client = createThirdwebClient({ 
   clientId: "279bdbf9028501a51bf797ada51321ac" 
 });
-
-// connect to your contract
-// export const contract = getContract({ 
-//   client, 
-//   chain: sepolia, 
-//   address: "0x..."
-// });
-//9wEdbyUSM80crdJwxUoRVUSmEwDXOvNJxVYW3ypP552qSDwpxxprAblKpSc1E_Rs5O3BnKNGgNBqNIR_mtJbSQ --Thirdweb Api secret key
 
 window.ethereum.on("accountsChanged", (accounts) => {
   // reload the page to get the latest account
