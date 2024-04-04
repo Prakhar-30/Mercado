@@ -10,6 +10,10 @@ import Shop from "./web3/pages/Shop";
 import ConnectWalletButton from "./components/ConectButton";
 import CreateNFT from "./web3/pages/CreateNFT";
 // create the client with your clientId, or secretKey if in a server environment
+
+import ArtistProfile from "./Pages/ArtistProfile";
+import CreatorProfile from "./Pages/CreatorProfile";
+
 export const client = createThirdwebClient({ 
   clientId: "279bdbf9028501a51bf797ada51321ac" 
 });
@@ -50,6 +54,8 @@ function App() {
         <Route path="/contact" element={<LampDemo />} />
         <Route path="/shop" element={<Shop />} />
         <Route path="/createNFT" element={<CreateNFT />} />
+        <Route path="/creatorProfile" element={<CreatorProfile />} />
+        <Route path="/artistProfile" element={<ArtistProfile />} />
       </Routes>
       
       <ConnectWalletButton />
