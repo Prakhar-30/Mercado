@@ -12,6 +12,14 @@ export const client = createThirdwebClient({
   clientId: "279bdbf9028501a51bf797ada51321ac" 
 });
 
+// connect to your contract
+// export const contract = getContract({ 
+//   client, 
+//   chain: sepolia, 
+//   address: "0x..."
+// });
+
+
 window.ethereum.on("accountsChanged", (accounts) => {
   // reload the page to get the latest account
   window.location.reload();
