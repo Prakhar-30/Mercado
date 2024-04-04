@@ -9,7 +9,6 @@ import Shop from "./web3/pages/Shop";
 // import { sepolia } from "thirdweb/chains";
 import ConnectWalletButton from "./components/ConectButton";
 import CreateNFT from "./web3/pages/CreateNFT";
-
 // create the client with your clientId, or secretKey if in a server environment
 export const client = createThirdwebClient({ 
   clientId: "279bdbf9028501a51bf797ada51321ac" 
