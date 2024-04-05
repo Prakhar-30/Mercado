@@ -9,6 +9,10 @@ import Shop from "./web3/pages/Shop";
 import ConnectWalletButton from "./components/ConectButton";
 import CreateNFT from "./web3/pages/CreateNFT";
 import { Marketplace } from "./Pages/Marketplace";
+
+import ArtistProfile from "./Pages/ArtistProfile";
+import CreatorProfile from "./Pages/CreatorProfile";
+
 export const client = createThirdwebClient({
   clientId: "279bdbf9028501a51bf797ada51321ac",
 });
@@ -34,21 +38,25 @@ window.ethereum.on("chainChanged", (chainId) => {
 
 function App() {
   return (
-    <ThirdwebProvider client={client}>
-      <div>
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<LampDemo />} />
-          <Route path="/Marketplace" element={<Marketplace />} />
-          <Route path="/Home" element={<Home />} />
-          <Route path="/about" element={<LampDemo />} />
-          <Route path="/contact" element={<LampDemo />} />
-          <Route path="/shop" element={<Shop />} />
-          <Route path="/createNFT" element={<CreateNFT />} />
-        </Routes>
+    <ThirdwebProvider 
+      client={client}
+    >
+   
+    <div>
+      <Navbar />
+      <Routes>
+      <Route path="/" element={<LampDemo />} />
+        <Route path="/Home" element={<Home />} />
+        <Route path="/about" element={<LampDemo />} />
+        <Route path="/contact" element={<LampDemo />} />
+        <Route path="/shop" element={<Shop />} />
+        <Route path="/createNFT" element={<CreateNFT />} />
+      </Routes>
+      
+      <ConnectWalletButton />
 
-        <ConnectWalletButton />
-      </div>
+    </div>
+    
     </ThirdwebProvider>
   );
 }
