@@ -1,25 +1,52 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React from "react";
+import { motion } from "framer-motion";
+import GlowingButton from "./GlowingButton";
+import DirectionAwareContainer from "./DirectionAwareContainer";
 
-const Card = () => {
+const Card = ({ imageUrl, title, paragraph }) => {
   const cardStyle = {
-    width: '30vw', // 40% of viewport width
-    height: '80vh', // 60% of viewport height
-    maxWidth: '600px', // Maximum width
-    maxHeight: '600px', // Maximum height
+    width: "30vw",
+    height: "78vh",
+    maxWidth: "600px",
+    maxHeight: "600px",
   };
+
+  let textShadowColor;
+
+  switch (title.toLowerCase()) {
+    case "music":
+      textShadowColor = "#39ff14";
+      break;
+    case "gaming":
+      textShadowColor = "#00ffff";
+      break;
+    case "arts":
+      textShadowColor = "#F535AA";
+      break;
+    default:
+      textShadowColor = "rgba(255, 255, 255, 0.9)";
+  }
 
   return (
     <motion.div
-      style={cardStyle}
-      className="bg-zinc-700 shadow-lg border rounded-xl p-4"
+      style={{
+        ...cardStyle,
+        textShadow: `0 0 10px ${textShadowColor}`,
+      }}
+      className="bg-zinc-700 shadow-lg border rounded-xl p-2 m-3"
       initial={{ opacity: 0, scale: 0.8 }}
       animate={{ opacity: 5, scale: 1 }}
       transition={{ duration: 0.5 }}
     >
-      {/* Card content here */}
-      <h2 className="text-lg font-semibold mb-2">Card Title</h2>
-      <p className="text-gray-400">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+      <div className="flex justify-center items-center">
+        <h2 className="text-white text-lg font-semibold mb-2">{title}</h2>
+      </div>
+      <div className="p-0 flex justify-center items-center m-0">
+        <p className="text-slate-400 p-0">{paragraph}</p>
+      </div>
+      <div className="">
+        <DirectionAwareContainer imageUrl={imageUrl} title={title} />
+      </div>
     </motion.div>
   );
 };

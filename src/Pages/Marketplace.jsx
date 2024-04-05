@@ -10,12 +10,15 @@ export function Marketplace() {
   return (
     <div
       className={cn(
-        "relative flex min-h-screen flex-col items-center justify-center z-[5000] bg-slate-950 w-full"
+        "relative overflow-hidden flex min-h-screen flex-col items-center justify-center z-[5000] bg-slate-950 w-full pt-20"
       )}
     >
       <Navbar />
 
-      <div className="relative flex justify-center mt-12" style={{ maxWidth: "calc(100% - 32px)" }}>
+      <div
+        className="relative flex justify-center mt-12"
+        style={{ maxWidth: "calc(100% - 32px)" }}
+      >
         <div
           className="relative flex justify-center items-center"
           onClick={() => {
@@ -23,13 +26,18 @@ export function Marketplace() {
           }}
           style={{
             zIndex: centerIndex === 0 ? 2 : 0,
-            transform: centerIndex === 0 ? "scale(1.2) translateY(-20px)" : "none",
+            transform:
+              centerIndex === 0 ? "scale(1.2) translateY(-20px)" : "none",
             opacity: centerIndex === 0 ? 1 : 0.7,
             transition: "transform 0.3s, opacity 0.8s, z-index 0.3s",
           }}
         >
           <ConditionalBackground type="music">
-            <Card />
+          <Card
+              imageUrl="/public/music1.webp"
+              title="Music"
+              paragraph="Unlock the beats of the future with rare digital music assets."
+            />
           </ConditionalBackground>
         </div>
         <div
@@ -39,13 +47,18 @@ export function Marketplace() {
           }}
           style={{
             zIndex: centerIndex === 1 ? 2 : 0,
-            transform: centerIndex === 1 ? "scale(1.2) translateY(-20px)" : "none",
+            transform:
+              centerIndex === 1 ? "scale(1.2) translateY(-20px)" : "none",
             opacity: centerIndex === 1 ? 1 : 0.7, // Increase opacity for selected card
             transition: "transform 0.3s, opacity 0.8s, z-index 0.3s",
           }}
         >
           <ConditionalBackground type="arts">
-            <Card />
+            <Card
+              imageUrl="/public/arts.avif"
+              title="Arts"
+              paragraph="Collect timeless beauty with NFTs crafted by visionary artists."
+            />
           </ConditionalBackground>
         </div>
         <div
@@ -55,13 +68,18 @@ export function Marketplace() {
           }}
           style={{
             zIndex: centerIndex === 2 ? 2 : 0,
-            transform: centerIndex === 2 ? "scale(1.2) translateY(-20px)" : "none",
+            transform:
+              centerIndex === 2 ? "scale(1.2) translateY(-20px)" : "none",
             opacity: centerIndex === 2 ? 1 : 0.7,
             transition: "transform 0.3s, opacity 0.8s, z-index 0.3s",
           }}
         >
           <ConditionalBackground type="gaming">
-            <Card />
+          <Card
+              imageUrl="/public/gaming.jpg"
+              title="Gaming"
+              paragraph="Game on with NFTs that make every move legendary."
+            />
           </ConditionalBackground>
         </div>
       </div>
