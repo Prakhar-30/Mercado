@@ -28,7 +28,7 @@ export function Marketplace() {
             transition: "transform 0.3s, opacity 0.8s, z-index 0.3s",
           }}
         >
-          <ConditionalBackground type="arts">
+          <ConditionalBackground type="music">
             <Card />
           </ConditionalBackground>
         </div>
@@ -44,7 +44,7 @@ export function Marketplace() {
             transition: "transform 0.3s, opacity 0.8s, z-index 0.3s",
           }}
         >
-          <ConditionalBackground type="music">
+          <ConditionalBackground type="arts">
             <Card />
           </ConditionalBackground>
         </div>

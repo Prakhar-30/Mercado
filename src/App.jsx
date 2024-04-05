@@ -8,13 +8,14 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Shop from "./web3/pages/Shop";
 import ConnectWalletButton from "./components/ConectButton";
 import CreateNFT from "./web3/pages/CreateNFT";
-import { Marketplace } from "./Pages/Marketplace";
+// create the client with your clientId, or secretKey if in a server environment
 
 import ArtistProfile from "./Pages/ArtistProfile";
 import CreatorProfile from "./Pages/CreatorProfile";
+import { Marketplace } from "./Pages/Marketplace";
 
-export const client = createThirdwebClient({
-  clientId: "279bdbf9028501a51bf797ada51321ac",
+export const client = createThirdwebClient({ 
+  clientId: "279bdbf9028501a51bf797ada51321ac" 
 });
 
 // connect to your contract
@@ -46,17 +47,20 @@ function App() {
       <Navbar />
       <Routes>
       <Route path="/" element={<LampDemo />} />
+      <Route path="/Marketplace" element={<Marketplace />} />
         <Route path="/Home" element={<Home />} />
         <Route path="/about" element={<LampDemo />} />
         <Route path="/contact" element={<LampDemo />} />
         <Route path="/shop" element={<Shop />} />
         <Route path="/createNFT" element={<CreateNFT />} />
+        <Route path="/creatorProfile" element={<CreatorProfile />} />
+        <Route path="/artistProfile" element={<ArtistProfile />} />
       </Routes>
       
       <ConnectWalletButton />
 
-    </div>
-    
+        <ConnectWalletButton />
+      </div>
     </ThirdwebProvider>
   );
 }
