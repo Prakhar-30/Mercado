@@ -1,6 +1,5 @@
 import React from "react";
 import { motion } from "framer-motion";
-import GlowingButton from "./GlowingButton";
 import DirectionAwareContainer from "./DirectionAwareContainer";
 
 const Card = ({ imageUrl, title, paragraph }) => {
@@ -21,7 +20,7 @@ const Card = ({ imageUrl, title, paragraph }) => {
       textShadowColor = "#00ffff";
       break;
     case "arts":
-      textShadowColor = "#F535AA";
+      textShadowColor = "#f522d9";
       break;
     default:
       textShadowColor = "rgba(255, 255, 255, 0.9)";
