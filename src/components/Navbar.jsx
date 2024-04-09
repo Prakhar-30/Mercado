@@ -1,7 +1,7 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "../utils/cn";
-import { IconHome, IconMessage, IconUser } from "@tabler/icons-react";
+// import { IconHome, IconMessage, IconUser } from "@tabler/icons-react";
 import WalletIcon from "/public/wallet-svgrepo-com.svg";
 import { NavbarItem } from "./NavbarItem";
 
@@ -10,17 +10,17 @@ const navItems = [
   {
     name: "Home",
     link: "/Home",
-    icon: <IconHome className="h-4 w-4 text-neutral-500 dark:text-white" />,
+    // icon: <IconHome className="h-4 w-4 text-neutral-500 dark:text-white" />,
   },
   {
     name: "About",
     link: "/about",
-    icon: <IconUser className="h-4 w-4 text-neutral-500 dark:text-white" />,
+    // icon: <IconUser className="h-4 w-4 text-neutral-500 dark:text-white" />,
   },
   {
     name: "Contact",
     link: "/contact",
-    icon: <IconMessage className="h-4 w-4 text-neutral-500 dark:text-white" />,
+    // icon: <IconMessage className="h-4 w-4 text-neutral-500 dark:text-white" />,
   },
 ];
 

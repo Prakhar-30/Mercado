@@ -45,7 +45,7 @@ export function Home() {
           <div className="text-slate-400 text-7xl p-8 ml-24 mr-60">
             Welcome to Mercado, where the future is yours to own.
           </div>
-          
+
           <div className="flex justify-center w-full right-0 pr-0 ml-0">
             <img src="/public/logoHere2.png" alt="logo" />
           </div>
@@ -70,10 +70,7 @@ export function Home() {
           <div className="flex mt-11">
             <div className="ml-2 mt-6 text-center w-3/5">
               <AnimatedText>
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                Eligendi, quo! Dolore distinctio error consequuntur, accusamus
-                qui quis nulla reprehenderit. Quos, veniam at ipsum labore
-                expedita fugit dolor debitis dolorum dolores?
+                Welcome to Mercado, where creativity finds its true value. As an Artist in the realms of Game Development, Music, or Visual Arts, your talents are the driving force behind the digital revolution. At Mercado, we empower artists like you to showcase your work to a global audience of Collectors and enthusiasts. Whether you're a seasoned professional or an emerging talent, Mercado provides a platform for you to connect with a community that appreciates and values your unique creations. By joining Mercado as an artist, you gain access to a vibrant marketplace where your ideas come to life as non-fungible tokens (NFTs), revolutionizing the way digital assets are bought, sold, and owned. Seize this opportunity to shape the future of digital ownership and redefine the boundaries of artistic expression.
               </AnimatedText>
             </div>
             <div className="text-center w-2/5 pl-8">
@@ -114,10 +111,7 @@ export function Home() {
             </div>
             <div className="mr-2 mt-6 text-center w-3/5">
               <AnimatedText>
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                Eligendi, quo! Dolore distinctio error consequuntur, accusamus
-                qui quis nulla reprehenderit. Quos, veniam at ipsum labore
-                expedita fugit dolor debitis dolorum dolores?
+                Become a Pioneer of the digital frontier with Mercado. As a Creator, you hold the key to unlocking the limitless possibilities of non-fungible tokens (NFTs). Whether you specialize in digital art, collectibles, or innovative experiences, Mercado provides the tools and resources you need to transform your creations into valuable assets in the burgeoning NFT marketplace. By minting your work as NFTs on Mercado, you gain exposure to a diverse audience of collectors eager to invest in the next generation of digital collectibles. Our user-friendly platform simplifies the process of minting and selling NFTs, allowing you to focus on what you do best: creating. Join Mercado today and embark on a journey where your imagination knows no bounds, and your creations become a cornerstone of the digital economy.
               </AnimatedText>
             </div>
           </div>
