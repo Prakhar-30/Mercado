@@ -13,9 +13,10 @@ import CreateNFT from "./web3/pages/CreateNFT";
 import ArtistProfile from "./Pages/ArtistProfile";
 import CreatorProfile from "./Pages/CreatorProfile";
 import { Marketplace } from "./Pages/Marketplace";
+import { MainMarket } from "./Pages/MainMarket";
 
-export const client = createThirdwebClient({ 
-  clientId: "279bdbf9028501a51bf797ada51321ac" 
+export const client = createThirdwebClient({
+  clientId: "279bdbf9028501a51bf797ada51321ac",
 });
 
 // connect to your contract
@@ -39,25 +40,23 @@ window.ethereum.on("chainChanged", (chainId) => {
 
 function App() {
   return (
-    <ThirdwebProvider 
-      client={client}
-    >
-   
-    <div>
-      <Navbar />
-      <Routes>
-      <Route path="/" element={<LampDemo />} />
-      <Route path="/Marketplace" element={<Marketplace />} />
-        <Route path="/Home" element={<Home />} />
-        <Route path="/about" element={<LampDemo />} />
-        <Route path="/contact" element={<LampDemo />} />
-        <Route path="/shop" element={<Shop />} />
-        <Route path="/createNFT" element={<CreateNFT />} />
-        <Route path="/creatorProfile" element={<CreatorProfile />} />
-        <Route path="/artistProfile" element={<ArtistProfile />} />
-      </Routes>
-      
-      <ConnectWalletButton />
+    <ThirdwebProvider client={client}>
+      <div>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<LampDemo />} />
+          <Route path="/MainMarket" element={<MainMarket />} />
+          <Route path="/Marketplace" element={<Marketplace />} />
+          <Route path="/Home" element={<Home />} />
+          <Route path="/about" element={<LampDemo />} />
+          <Route path="/contact" element={<LampDemo />} />
+          <Route path="/shop" element={<Shop />} />
+          <Route path="/createNFT" element={<CreateNFT />} />
+          <Route path="/creatorProfile" element={<CreatorProfile />} />
+          <Route path="/artistProfile" element={<ArtistProfile />} />
+        </Routes>
+
+        <ConnectWalletButton />
 
         <ConnectWalletButton />
       </div>

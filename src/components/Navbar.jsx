@@ -1,7 +1,7 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "../utils/cn";
-// import { IconHome, IconMessage, IconUser } from "@tabler/icons-react";
+import { IconHome, IconMessage, IconUser } from "@tabler/icons-react";
 import WalletIcon from "/public/wallet-svgrepo-com.svg";
 import { NavbarItem } from "./NavbarItem";
 

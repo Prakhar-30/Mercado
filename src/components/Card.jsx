@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import DirectionAwareContainer from "./DirectionAwareContainer";
+import { Link } from "react-router-dom";
 
 const Card = ({ imageUrl, title, paragraph }) => {
   const cardStyle = {
@@ -43,8 +44,10 @@ const Card = ({ imageUrl, title, paragraph }) => {
       <div className="p-0 flex justify-center items-center m-0">
         <p className="text-slate-400 p-0">{paragraph}</p>
       </div>
-      <div className="">
-        <DirectionAwareContainer imageUrl={imageUrl} title={title} />
+      <div className="top-10">
+        <Link to={`/MainMarket?theme=${title}`}>
+          <DirectionAwareContainer imageUrl={imageUrl} title={title} />
+        </Link>
       </div>
     </motion.div>
   );

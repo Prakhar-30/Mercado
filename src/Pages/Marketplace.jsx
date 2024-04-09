@@ -33,7 +33,7 @@ export function Marketplace() {
           }}
         >
           <ConditionalBackground type="music">
-          <Card
+            <Card
               imageUrl="/public/music1.webp"
               title="Music"
               paragraph="Unlock the beats of the future with rare digital music assets."
@@ -75,7 +75,7 @@ export function Marketplace() {
           }}
         >
           <ConditionalBackground type="gaming">
-          <Card
+            <Card
               imageUrl="/public/gaming.jpg"
               title="Gaming"
               paragraph="Game on with NFTs that make every move legendary."
