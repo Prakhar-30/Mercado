@@ -14,6 +14,8 @@ import ArtistProfile from "./Pages/ArtistProfile";
 import CreatorProfile from "./Pages/CreatorProfile";
 import { Marketplace } from "./Pages/Marketplace";
 import { MainMarket } from "./Pages/MainMarket";
+import { CreatorsRanking } from "./Pages/CreatorsRanking";
+
 
 export const client = createThirdwebClient({
   clientId: "279bdbf9028501a51bf797ada51321ac",
@@ -45,6 +47,7 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<LampDemo />} />
+          <Route path="/CreatorsRanking" element={<CreatorsRanking />} />
           <Route path="/MainMarket" element={<MainMarket />} />
           <Route path="/Marketplace" element={<Marketplace />} />
           <Route path="/Home" element={<Home />} />
