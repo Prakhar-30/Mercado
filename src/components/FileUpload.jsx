@@ -1,7 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { JWT_SECRET_ACCESS_TOKEN, Gateway_url } from "../../config";
+import { motion } from "framer-motion";
 
-function FileUpload({ ipfsHash, setIpfsHash, metadataHash, setMetadataHash }) {
+function FileUpload({
+  ipfsHash,
+  setIpfsHash,
+  metadataHash,
+  setMetadataHash,
+  setPreviewImage,
+}) {
   const [selectedFile, setSelectedFile] = useState();
   const [uploadingFile, setUploadingFile] = useState(false);
   const [uploadingMetadata, setUploadingMetadata] = useState(false);
@@ -11,8 +18,21 @@ function FileUpload({ ipfsHash, setIpfsHash, metadataHash, setMetadataHash }) {
     theme: "",
   });
 
+  useEffect(() => {
+    if (ipfsHash) {
+      setPreviewImage(`${Gateway_url}/ipfs/${ipfsHash}`);
+    }
+  }, [ipfsHash, setPreviewImage]);
+
   const changeHandler = (event) => {
     setSelectedFile(event.target.files[0]);
+    if (event.target.files[0]) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setPreviewImage(e.target.result);
+      };
+      reader.readAsDataURL(event.target.files[0]);
+    }
   };
 
   const handleSubmission = async () => {
@@ -34,6 +54,8 @@ function FileUpload({ ipfsHash, setIpfsHash, metadataHash, setMetadataHash }) {
       );
       const resData = await res.json();
       setIpfsHash(resData.IpfsHash);
+
+      setPreviewImage(`${Gateway_url}/ipfs/${resData.IpfsHash}`);
 
       setUploadingFile(false);
     } catch (error) {
@@ -75,7 +97,6 @@ function FileUpload({ ipfsHash, setIpfsHash, metadataHash, setMetadataHash }) {
     }
   };
 
-  // Trigger handleMetadata when IpfsHash changes
   useEffect(() => {
     if (ipfsHash) {
       handleMetadata();
@@ -91,45 +112,64 @@ function FileUpload({ ipfsHash, setIpfsHash, metadataHash, setMetadataHash }) {
 
   return (
     <>
-      <label className="form-label">Choose File</label>
-      <input type="file" onChange={changeHandler} />
-      {uploadingFile && <p>Uploading File...</p>}
-      {uploadingMetadata && <p>Uploading Metadata...</p>}
-      {ipfsHash && <img src={`${Gateway_url}/ipfs/${ipfsHash}`} alt="NFT" />}
-      
-
-      {/* Metadata Input Fields */}
-      {!metadataHash &&
-      <>
-      <input
-        type="text"
-        placeholder="Name"
-        className="my-3"
-        value={metadataFields.name}
-        onChange={(e) => handleInputChange("name", e.target.value)}
-      />
-      <input
-        type="text"
-        placeholder="Description"
-        className="my-3 block"
-        value={metadataFields.description}
-        onChange={(e) => handleInputChange("description", e.target.value)}
-      />
-      <select
-        value={metadataFields.theme}
-        onChange={(e) => handleInputChange("theme", e.target.value)}
-      >
-        <option value="">Select Theme</option>
-        <option value="Gaming">Gaming</option>
-        <option value="Arts">Arts</option>
-        <option value="Music">Music</option>
-      </select>
-
-      <button onClick={handleSubmission} className="block my-4 bg-blue-500 p-2">Submit</button>
-      </>
+      <label className="form-label">Choose File :</label>
+      <input 
+      type="file"
+       onChange={changeHandler}
+       className="file-upload-button" 
+       style={{ boxShadow: "0 0 6px 2px rgba(255, 255, 255, 0.7)" }} />
+      {uploadingFile &&
+      <div className="text-slate-100">
+       <p>Uploading File...</p>
+       </div>
+       }
+      {uploadingMetadata &&
+      <div className="text-slate-100">
+      <p>Uploading Metadata...</p>
+      </div>
       }
+
+      {!metadataHash && (
+        <>
+          <input
+            type="text"
+            placeholder="Name"
+            className="my-3"
+            value={metadataFields.name}
+            onChange={(e) => handleInputChange("name", e.target.value)}
+            style={{ backgroundColor: "#333", color: "#fff", border: "1px solid #555", borderRadius: "4px", padding: "8px", width: "100%" }}
+          />
+          <input
+            type="text"
+            placeholder="Description"
+            className="my-3 block"
+            value={metadataFields.description}
+            onChange={(e) => handleInputChange("description", e.target.value)}
+            style={{ backgroundColor: "#333", color: "#fff", border: "1px solid #555", borderRadius: "4px", padding: "8px", width: "100%" }}
+          />
+          <select
+            value={metadataFields.theme}
+            onChange={(e) => handleInputChange("theme", e.target.value)}
+            style={{ backgroundColor: "#333", color: "#fff", border: "1px solid #555", borderRadius: "4px", padding: "8px", width: "100%" }}
+          >
+            
+            <option value="">Select Theme</option>
+            <option value="Gaming">Gaming</option>
+            <option value="Arts">Arts</option>
+            <option value="Music">Music</option>
+          </select>
+
+          <motion.button
+            whileHover={{ boxShadow: "0 0 10px 3px rgba(255, 255, 255, 0.7)" }}
+            onClick={handleSubmission}
+            className="block my-4 p-2 text-white rounded-2xl"
+            style={{ backgroundColor: "#0000008f" }}
+          >
+            Submit
+          </motion.button>
+        </>
+      )}
     </>
-      
   );
 }
 
