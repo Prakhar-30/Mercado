@@ -5,17 +5,53 @@ import { cn } from "../utils/cn";
 import { BackgroundGradientDemo } from "../components/BackgroundGradientDemo";
 import { Using3dCard } from "../components/Using3dCard";
 import GlowingButton from "../components/GlowingButton";
+import { useStateContext } from "../contexts";
+import { getMetadata } from "../utils/web3Helpers";
+import { Gateway_url } from "../../config";
 
 export function MainMarket() {
   const [backgroundImage, setBackgroundImage] = useState("");
   const [shadowColor, setShadowColor] = useState("#00ffff");
   const [selectedImage, setSelectedImage] = useState(null);
-  const [selectedImageDetails, setSelectedImageDetails] = useState(null);
+  const [selectedImageDetails, setSelectedImageDetails] = useState({
+    name: "",
+    description: "",
+  });
   const location = useLocation();
+  const { ERC1155_CONTRACT } = useStateContext();
+  const [metadata, setMetadata] = useState([]);
+  const [filteredMetadata, setFilteredMetadata] = useState([]);
+  console.log(metadata);
+  console.log(filteredMetadata);
+  useEffect(() => {
+    const fetchMetadata = async () => {
+      try {
+        const hashes = await ERC1155_CONTRACT.methods.getAll().call();
+        const metadataArray = [];
+        for (let i = 1; i < hashes.length; i++) {
+          const data = await getMetadata(Gateway_url, hashes[i]);
+          metadataArray.push(data);
+        }
+        setMetadata(metadataArray);
+      } catch (error) {
+        console.error("Error fetching metadata:", error);
+      }
+    };
+    fetchMetadata();
+  }, [ERC1155_CONTRACT]);
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const theme = params.get("theme");
+
+    let filteredData = [];
+    if (theme) {
+      filteredData = metadata.filter((item) => item.theme === theme);
+    } else {
+      // If no theme is specified or metadata is not loaded yet
+      filteredData = [...metadata];
+    }
+    setFilteredMetadata(filteredData);
 
     switch (theme) {
       case "Music":
@@ -34,79 +70,15 @@ export function MainMarket() {
         setBackgroundImage("");
         break;
     }
-  }, [location.search]);
+  }, [location.search, metadata]);
 
   const handleImageClick = (image) => {
     setSelectedImage(image);
-    // Hardcoded details for demonstration
-    switch (image) {
-      case "/public/demo nfts/nft1.png":
-        setSelectedImageDetails({
-          price: "10 MEC",
-          creator: "John Doe",
-          owner: "Jane Doe",
-        });
-        break;
-      case "/public/demo nfts/nft2.png":
-        setSelectedImageDetails({
-          price: "15 MEC",
-          creator: "Alice Smith",
-          owner: "Bob Smith",
-        });
-        break;
-      case "/public/demo nfts/nft3.png":
-        setSelectedImageDetails({
-          price: "7 MEC",
-          creator: "Alec Benjamin",
-          owner: "Bobby Shane",
-        });
-        break;
-      case "/public/demo nfts/nft4.png":
-        setSelectedImageDetails({
-          price: "2 MEC",
-          creator: "Johnny Camron",
-          owner: "Helen Smith",
-        });
-        break;
-      case "/public/demo nfts/nft5.png":
-        setSelectedImageDetails({
-          price: "3 MEC",
-          creator: "Jessica Quin",
-          owner: "Harley",
-        });
-        break;
-      case "/public/demo nfts/nft6.png":
-        setSelectedImageDetails({
-          price: "7 MEC",
-          creator: "Egsy Martha Jr.",
-          owner: "Jane Foster",
-        });
-        break;
-      case "/public/demo nfts/nft7.png":
-        setSelectedImageDetails({
-          price: "12 MEC",
-          creator: "Alice Wood",
-          owner: "Chris Pattinson",
-        });
-        break;
-      case "/public/demo nfts/nft8.png":
-        setSelectedImageDetails({
-          price: "8 MEC",
-          creator: "Robert Pat",
-          owner: "Bob Smith",
-        });
-        break;
-      case "/public/demo nfts/nft9.png":
-        setSelectedImageDetails({
-          price: "9 MEC",
-          creator: "Quill Warner",
-          owner: "Henry Carline",
-        });
-        break;
-      default:
-        setSelectedImageDetails(null);
-        break;
-    }
+    const selectedMetadata = filteredMetadata.find((item) => item.image === image);
+    setSelectedImageDetails({
+      name: selectedMetadata?.name || "",
+      description: selectedMetadata?.description || "",
+    });
   };
 
   return (
@@ -115,9 +87,7 @@ export function MainMarket() {
         "relative overflow-hidden flex min-h-screen flex-col items-center justify-center z-[5000] bg-slate-950 w-full pt-20",
         backgroundImage && "bg-cover bg-center bg-no-repeat bg-fixed"
       )}
-      style={
-        backgroundImage ? { backgroundImage: `url(${backgroundImage})` } : {}
-      }
+      style={backgroundImage ? { backgroundImage: `url(${backgroundImage})` } : {}}
     >
       <style>
         {`
@@ -148,21 +118,16 @@ export function MainMarket() {
             overflowY: "auto",
           }}
         >
-          <div
-            className="MarketSection grid grid-cols-3 gap-10 p-8 pr-2 pb-3"
-            style={{ width: "850px", height: "600px" }}
-          >
-            {Array.from({ length: 9 }, (_, i) => i + 1).map((index) => (
+          <div className="MarketSection grid grid-cols-3 gap-10 p-8 pr-2 pb-3" style={{ width: "850px", height: "600px" }}>
+            {filteredMetadata.map((item, index) => (
               <div className="flex justify-center" key={index}>
                 <BackgroundGradientDemo>
                   <div className="">
                     <img
-                      src={`/public/demo nfts/nft${index}.png`}
-                      alt={`nft${index}`}
+                      src={item?.image}
+                      alt={item?.name}
                       style={{ width: "300px", height: "250px" }}
-                      onClick={() =>
-                        handleImageClick(`/public/demo nfts/nft${index}.png`)
-                      }
+                      onClick={() => handleImageClick(item?.image)}
                     />
                   </div>
                 </BackgroundGradientDemo>
@@ -182,31 +147,26 @@ export function MainMarket() {
             {selectedImage && <Using3dCard src={selectedImage} title="NFT" />}
           </div>
           <div className="Details">
-            {selectedImageDetails && (
-              <>
-                <div className="text-neutral-200 text-2xl mb-4">
-                  Price:
-                  <span className="text-neutral-500">
-                    {" "}
-                    {selectedImageDetails.price}
-                  </span>
-                </div>
-                <div className="text-neutral-200 text-2xl mt-4 mb-4">
-                  Creator:
-                  <span className="text-neutral-500">
-                    {" "}
-                    {selectedImageDetails.creator}
-                  </span>
-                </div>
-                <div className="text-neutral-200 text-2xl mt-4 mb-4">
-                  Owner:
-                  <span className="text-neutral-500">
-                    {" "}
-                    {selectedImageDetails.owner}
-                  </span>
-                </div>
-              </>
-            )}
+            <div className="text-neutral-200 text-2xl mb-4">
+              Name:
+              <span className="text-neutral-500">{selectedImageDetails.name}</span>
+            </div>
+            <div className="text-neutral-200 text-2xl mt-4 mb-4">
+              Description:
+              <span className="text-neutral-500">{selectedImageDetails.description}</span>
+            </div>
+            <div className="text-neutral-200 text-2xl mt-4 mb-4">
+              Price:
+              <span className="text-neutral-500">{selectedImageDetails.price || ""}</span>
+            </div>
+            <div className="text-neutral-200 text-2xl mt-4 mb-4">
+              Creator:
+              <span className="text-neutral-500">{selectedImageDetails.creator || ""}</span>
+            </div>
+            <div className="text-neutral-200 text-2xl mt-4 mb-4">
+              Owner:
+              <span className="text-neutral-500">{selectedImageDetails.owner || ""}</span>
+            </div>
           </div>
           <div className="Purchase flex justify-center items-center">
             <GlowingButton text="Make Purchase" />

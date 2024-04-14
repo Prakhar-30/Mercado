@@ -16,23 +16,7 @@ export function Marketplace() {
   const { ERC1155_CONTRACT } = useStateContext();
 
   const [centerIndex, setCenterIndex] = useState(1);
-  const [metadata, setMetadata] = useState([{}]);
-  const [metadataHashes, setMetadataHashes] = useState([]);
-
-  useEffect(() => {
-      const fetchMetadata = async () => {
-      const hashes = await ERC1155_CONTRACT.methods.getAll().call();
-      setMetadataHashes(hashes);
-      for (let i = 1; i < hashes.length; i++) {
-        const data = await getMetadata(Gateway_url,hashes[i]);
-        console.log(data)
-        setMetadata((prev) => [...prev, data]);
-      }
-    }
-    fetchMetadata();
-  },[ERC1155_CONTRACT])
-    
-    console.log(metadata);
+  
    
 
   return (
