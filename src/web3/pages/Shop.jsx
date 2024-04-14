@@ -6,7 +6,7 @@ import MercatABI from "../ABIs/Mercat_ABI.json";
 import { motion } from "framer-motion";
 import { BackgroundGradientDemo } from "../../components/BackgroundGradientDemo";
 import Spline from "@splinetool/react-spline";
-
+import { useStateContext } from "../../contexts";
 
 
 const Shop = () => {
@@ -14,10 +14,11 @@ const Shop = () => {
 
   const [errorMessage, setErrorMessage] = useState("");
   const [MEC, setMEC] = useState(null);
-  const [account, setAccount] = useState(null);
+  
   const [balance, setBalance] = useState(null);
 
-  const [MercatContract, setMercatContract] = useState(null);
+  const { MercatContract, account } = useStateContext();
+  
 
   const handlePurchase = async () => {
     if (!ethers || parseFloat(ethers) <= 0 || !account) {
@@ -39,29 +40,7 @@ const Shop = () => {
     setErrorMessage("");
   };
 
-  useEffect(() => {
-    const initializeWeb3 = async () => {
-      if (typeof window.ethereum !== "undefined") {
-        const web3 = new Web3(window.ethereum);
-        try {
-          await window.ethereum.request({ method: "eth_requestAccounts" });
-          const accounts = await web3.eth.getAccounts();
-          setAccount(accounts[0]);
-          const contract = new web3.eth.Contract(
-            MercatABI,
-            MERCAT_CONTRACT_ADDRESS
-          );
-          setMercatContract(contract);
-        } catch (error) {
-          console.error(error);
-        }
-      } else {
-        alert("Please install Metamask");
-      }
-    };
-    initializeWeb3();
-  }, []);
-
+  
   useEffect(() => {
     const getBalance = async () => {
       if (account && MercatContract) {

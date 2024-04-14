@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ThirdwebProvider } from "thirdweb/react";
 import { LampDemo } from "./components/LampDemo";
 import { Navbar } from "./components/Navbar";
 import { Home } from "./Pages/Home";
+import Web3 from "web3"
 import { createThirdwebClient, getContract, resolveMethod } from "thirdweb";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useStateContext } from "./contexts";
 import Shop from "./web3/pages/Shop";
 import ConnectWalletButton from "./components/ConectButton";
 import CreateNFT from "./web3/pages/CreateNFT";
@@ -14,10 +16,17 @@ import ArtistProfile from "./Pages/ArtistProfile";
 import CreatorProfile from "./Pages/CreatorProfile";
 import { Marketplace } from "./Pages/Marketplace";
 import { MainMarket } from "./Pages/MainMarket";
+import { ERC1155_CONTRACT_ADDRESS, MERCAT_CONTRACT_ADDRESS } from "./web3/constants";
+import ERC1155_ABI from "../src/web3/ABIs/ERC1155_ABI.json";
+import MercatABI from "../src/web3/ABIs/ERC1155_ABI.json";
 
 export const client = createThirdwebClient({
   clientId: "279bdbf9028501a51bf797ada51321ac",
 });
+
+
+
+
 
 // connect to your contract
 // export const contract = getContract({
@@ -39,6 +48,59 @@ window.ethereum.on("chainChanged", (chainId) => {
 });
 
 function App() {
+
+  const { ERC1155_CONTRACT, setERC1155_CONTRACT, account, setAccount,MercatContract,setMercatContract } = useStateContext();
+
+  useEffect(() => {
+    // Check MetaMask availability and initialize web3
+    const initializeWeb3 = async () => {
+        if (typeof window.ethereum !== "undefined") {
+            const web3 = new Web3(window.ethereum);
+            try {
+                await window.ethereum.request({ method: "eth_requestAccounts" });
+                const accounts = await web3.eth.getAccounts();
+                setAccount(accounts[0]);
+                const contract = new web3.eth.Contract(
+                    ERC1155_ABI,
+                    ERC1155_CONTRACT_ADDRESS
+                );
+                setERC1155_CONTRACT(contract);
+            } catch (error) {
+                console.error(error);
+            }
+        } else {
+            alert("Please install MetaMask");
+        }
+    };
+    initializeWeb3();
+  }, []);
+
+
+  useEffect(() => {
+    const initializeWeb3 = async () => {
+      if (typeof window.ethereum !== "undefined") {
+        const web3 = new Web3(window.ethereum);
+        try {
+          await window.ethereum.request({ method: "eth_requestAccounts" });
+          const accounts = await web3.eth.getAccounts();
+          setAccount(accounts[0]);
+          const contract = new web3.eth.Contract(
+            MercatABI,
+            MERCAT_CONTRACT_ADDRESS
+          );
+          setMercatContract(contract);
+        } catch (error) {
+          console.error(error);
+        }
+      } else {
+        alert("Please install Metamask");
+      }
+    };
+    initializeWeb3();
+  }, []);
+
+
+
   return (
     <ThirdwebProvider client={client}>
       <div>

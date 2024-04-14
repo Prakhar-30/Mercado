@@ -4,6 +4,7 @@ import { cn } from "../utils/cn";
 import GlowingButton from "../components/GlowingButton";
 import AnimatedText from "../components/AnimatedDiv";
 import { BackgroundGradientDemo } from "../components/BackgroundGradientDemo";
+import { Link } from "react-router-dom";
 
 export function Home() {
   return (
@@ -56,7 +57,10 @@ export function Home() {
         </div>
         <div className="mb-48">
           <div className="absolute left-32">
-            <GlowingButton text="Explore MarketPlace" />
+            <Link to="/marketplace">
+            
+              <GlowingButton text="Explore MarketPlace" />
+            </Link>
           </div>
         </div>
 
