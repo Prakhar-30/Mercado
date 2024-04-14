@@ -19,6 +19,8 @@ import { MainMarket } from "./Pages/MainMarket";
 import { ERC1155_CONTRACT_ADDRESS, MERCAT_CONTRACT_ADDRESS } from "./web3/constants";
 import ERC1155_ABI from "../src/web3/ABIs/ERC1155_ABI.json";
 import MercatABI from "../src/web3/ABIs/ERC1155_ABI.json";
+import { CreatorsRanking } from "./Pages/CreatorsRanking";
+
 
 export const client = createThirdwebClient({
   clientId: "279bdbf9028501a51bf797ada51321ac",
@@ -107,6 +109,7 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<LampDemo />} />
+          <Route path="/CreatorsRanking" element={<CreatorsRanking />} />
           <Route path="/MainMarket" element={<MainMarket />} />
           <Route path="/Marketplace" element={<Marketplace />} />
           <Route path="/Home" element={<Home />} />
