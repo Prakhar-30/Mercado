@@ -137,9 +137,16 @@ export function MainMarket() {
         </div>
 
         <div
-          className="CartSection p-0 ml-1 mr-16 border border-gray-500 rounded-md"
-          style={{ height: "650px", width: "450px", boxShadow: "0 4px 6px rgba(255,255 , 255, 0.8)" }}
-        >
+  className="CartSection overflow-x-hidden p-0 ml-1 mr-16 border border-gray-500 rounded-md"
+  style={{
+    height: "650px",
+    width: "450px",
+    boxShadow: "0 4px 6px rgba(255, 255, 255, 0.8)",
+    overflowY: "scroll", // Enable vertical scrollbar
+    scrollbarWidth: "thin", // Thin scrollbar
+    scrollbarColor: "rgba(0, 0, 0, 0.5) rgba(255, 255, 255, 0.3)", // Scrollbar colors
+  }}
+>
           <div className="flex justify-center items-center mt-4">
             <p className="text-neutral-200 text-2xl">CART</p>
           </div>

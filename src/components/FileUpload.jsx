@@ -8,6 +8,7 @@ function FileUpload({
   metadataHash,
   setMetadataHash,
   setPreviewImage,
+  handleLoadingChange, // Add handleLoadingChange as a prop
 }) {
   const [selectedFile, setSelectedFile] = useState();
   const [uploadingFile, setUploadingFile] = useState(false);
@@ -58,6 +59,9 @@ function FileUpload({
       setPreviewImage(`${Gateway_url}/ipfs/${resData.IpfsHash}`);
 
       setUploadingFile(false);
+
+      // Call handleLoadingChange to notify parent component about loading state change
+      handleLoadingChange(true); // Indicate that metadata upload is starting
     } catch (error) {
       console.log("Error uploading file to IPFS:", error);
       setUploadingFile(false);
@@ -91,6 +95,9 @@ function FileUpload({
       setMetadataHash(resData.IpfsHash);
 
       setUploadingMetadata(false);
+
+      // Call handleLoadingChange to notify parent component about loading state change
+      handleLoadingChange(false); // Indicate that metadata upload is complete
     } catch (error) {
       console.log("Error uploading metadata to IPFS:", error);
       setUploadingMetadata(false);
@@ -113,21 +120,48 @@ function FileUpload({
   return (
     <>
       <label className="form-label">Choose File :</label>
-      <input 
-      type="file"
-       onChange={changeHandler}
-       className="file-upload-button" 
-       style={{ boxShadow: "0 0 6px 2px rgba(255, 255, 255, 0.7)" }} />
-      {uploadingFile &&
-      <div className="text-slate-100">
-       <p>Uploading File...</p>
-       </div>
-       }
-      {uploadingMetadata &&
-      <div className="text-slate-100">
-      <p>Uploading Metadata...</p>
+      <input
+        type="file"
+        onChange={changeHandler}
+        className="file-upload-button"
+        style={{ boxShadow: "0 0 6px 2px rgba(255, 255, 255, 0.7)" }}
+      />
+      {uploadingFile && (
+        <div className="text-slate-100">
+          {/* <p>Uploading File...</p> */}
+          <div
+            className="inline-block h-4 w-4 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+            role="status"
+          >
+            {/* <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
+              Loading...
+            </span> */}
+          </div>
+          <span>Uploading</span>
+        </div>
+      )}
+      {uploadingMetadata && (
+        // <div className="text-slate-100">
+        //   <div
+        //     className="inline-block h-4 w-4 animate-custom_spin rounded-full bg-current border-4 border-solid border-current border-r-transparent align-[-0.125em] animate-spin_1.5s_linear_infinite"
+        //     role="status"
+        //   >
+        //     <span>Loading...</span>
+        //   </div>
+        // </div>
+        <div className="text-slate-100">
+        {/* <p>Uploading File...</p> */}
+        <div
+          className="inline-block h-4 w-4 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+          role="status"
+        >
+          {/* <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
+            Loading...
+          </span> */}
+        </div>
+        <span> Uploading Meta Deta</span>
       </div>
-      }
+      )}
 
       {!metadataHash && (
         <>
@@ -137,7 +171,14 @@ function FileUpload({
             className="my-3"
             value={metadataFields.name}
             onChange={(e) => handleInputChange("name", e.target.value)}
-            style={{ backgroundColor: "#333", color: "#fff", border: "1px solid #555", borderRadius: "4px", padding: "8px", width: "100%" }}
+            style={{
+              backgroundColor: "#333",
+              color: "#fff",
+              border: "1px solid #555",
+              borderRadius: "4px",
+              padding: "8px",
+              width: "100%",
+            }}
           />
           <input
             type="text"
@@ -145,14 +186,27 @@ function FileUpload({
             className="my-3 block"
             value={metadataFields.description}
             onChange={(e) => handleInputChange("description", e.target.value)}
-            style={{ backgroundColor: "#333", color: "#fff", border: "1px solid #555", borderRadius: "4px", padding: "8px", width: "100%" }}
+            style={{
+              backgroundColor: "#333",
+              color: "#fff",
+              border: "1px solid #555",
+              borderRadius: "4px",
+              padding: "8px",
+              width: "100%",
+            }}
           />
           <select
             value={metadataFields.theme}
             onChange={(e) => handleInputChange("theme", e.target.value)}
-            style={{ backgroundColor: "#333", color: "#fff", border: "1px solid #555", borderRadius: "4px", padding: "8px", width: "100%" }}
+            style={{
+              backgroundColor: "#333",
+              color: "#fff",
+              border: "1px solid #555",
+              borderRadius: "4px",
+              padding: "8px",
+              width: "100%",
+            }}
           >
-            
             <option value="">Select Theme</option>
             <option value="Gaming">Gaming</option>
             <option value="Arts">Arts</option>
