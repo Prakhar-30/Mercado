@@ -44,7 +44,9 @@ const Shop = () => {
   useEffect(() => {
     const getBalance = async () => {
       if (account && MercatContract) {
+        console.log("account in useEffect", account);
         const balance = await MercatContract.methods.balanceOf(account).call();
+        console.log("balance in useEffect", balance);
         setBalance(Number(balance));
       }
     };

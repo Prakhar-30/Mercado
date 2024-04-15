@@ -8,7 +8,8 @@ function FileUpload({
   metadataHash,
   setMetadataHash,
   setPreviewImage,
-  handleLoadingChange, // Add handleLoadingChange as a prop
+  account,
+  handleLoadingChange,
 }) {
   const [selectedFile, setSelectedFile] = useState();
   const [uploadingFile, setUploadingFile] = useState(false);
@@ -17,6 +18,7 @@ function FileUpload({
     name: "",
     description: "",
     theme: "",
+    price: "", // New field for NFT price
   });
 
   useEffect(() => {
@@ -60,7 +62,6 @@ function FileUpload({
 
       setUploadingFile(false);
 
-      // Call handleLoadingChange to notify parent component about loading state change
       handleLoadingChange(true); // Indicate that metadata upload is starting
     } catch (error) {
       console.log("Error uploading file to IPFS:", error);
@@ -76,7 +77,9 @@ function FileUpload({
         name: metadataFields.name,
         description: metadataFields.description,
         theme: metadataFields.theme,
+        creator: account,
         image: `${Gateway_url}/ipfs/${ipfsHash}`,
+        price: metadataFields.price, // Include price in metadata
       };
       const metadata = JSON.stringify(metadataObject);
 
@@ -96,7 +99,6 @@ function FileUpload({
 
       setUploadingMetadata(false);
 
-      // Call handleLoadingChange to notify parent component about loading state change
       handleLoadingChange(false); // Indicate that metadata upload is complete
     } catch (error) {
       console.log("Error uploading metadata to IPFS:", error);
@@ -128,39 +130,25 @@ function FileUpload({
       />
       {uploadingFile && (
         <div className="text-slate-100">
-          {/* <p>Uploading File...</p> */}
           <div
             className="inline-block h-4 w-4 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
             role="status"
           >
-            {/* <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
-              Loading...
-            </span> */}
+            {/* Loading animation */}
           </div>
           <span>Uploading</span>
         </div>
       )}
       {uploadingMetadata && (
-        // <div className="text-slate-100">
-        //   <div
-        //     className="inline-block h-4 w-4 animate-custom_spin rounded-full bg-current border-4 border-solid border-current border-r-transparent align-[-0.125em] animate-spin_1.5s_linear_infinite"
-        //     role="status"
-        //   >
-        //     <span>Loading...</span>
-        //   </div>
-        // </div>
         <div className="text-slate-100">
-        {/* <p>Uploading File...</p> */}
-        <div
-          className="inline-block h-4 w-4 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
-          role="status"
-        >
-          {/* <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
-            Loading...
-          </span> */}
+          <div
+            className="inline-block h-4 w-4 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+            role="status"
+          >
+            {/* Loading animation */}
+          </div>
+          <span>Uploading Metadata</span>
         </div>
-        <span> Uploading Meta Deta</span>
-      </div>
       )}
 
       {!metadataHash && (
@@ -169,49 +157,36 @@ function FileUpload({
             type="text"
             placeholder="Name"
             className="my-3"
+            style={{ backgroundColor: "#333", color: "#fff", border: "1px solid #555", borderRadius: "4px", padding: "8px", width:"100%"}}
             value={metadataFields.name}
             onChange={(e) => handleInputChange("name", e.target.value)}
-            style={{
-              backgroundColor: "#333",
-              color: "#fff",
-              border: "1px solid #555",
-              borderRadius: "4px",
-              padding: "8px",
-              width: "100%",
-            }}
           />
           <input
             type="text"
             placeholder="Description"
-            className="my-3 block"
+            className="my-3"
+            style={{ backgroundColor: "#333", color: "#fff", border: "1px solid #555", borderRadius: "4px", padding: "8px", width:"100%"}}
             value={metadataFields.description}
             onChange={(e) => handleInputChange("description", e.target.value)}
-            style={{
-              backgroundColor: "#333",
-              color: "#fff",
-              border: "1px solid #555",
-              borderRadius: "4px",
-              padding: "8px",
-              width: "100%",
-            }}
           />
           <select
             value={metadataFields.theme}
+            style={{ backgroundColor: "#333", color: "#fff", border: "1px solid #555", borderRadius: "4px", padding: "8px", width:"100%"}}
             onChange={(e) => handleInputChange("theme", e.target.value)}
-            style={{
-              backgroundColor: "#333",
-              color: "#fff",
-              border: "1px solid #555",
-              borderRadius: "4px",
-              padding: "8px",
-              width: "100%",
-            }}
           >
             <option value="">Select Theme</option>
             <option value="Gaming">Gaming</option>
             <option value="Arts">Arts</option>
             <option value="Music">Music</option>
           </select>
+          <input
+            type="text"
+            placeholder="Price (in MEC)"
+            className="my-3"
+            style={{ backgroundColor: "#333", color: "#fff", border: "1px solid #555", borderRadius: "4px", padding: "8px", width:"100%"}}
+            value={metadataFields.price}
+            onChange={(e) => handleInputChange("price", e.target.value)}
+          />
 
           <motion.button
             whileHover={{ boxShadow: "0 0 10px 3px rgba(255, 255, 255, 0.7)" }}

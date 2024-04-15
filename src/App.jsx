@@ -18,7 +18,7 @@ import { Marketplace } from "./Pages/Marketplace";
 import { MainMarket } from "./Pages/MainMarket";
 import { ERC1155_CONTRACT_ADDRESS, MERCAT_CONTRACT_ADDRESS } from "./web3/constants";
 import ERC1155_ABI from "../src/web3/ABIs/ERC1155_ABI.json";
-import MercatABI from "../src/web3/ABIs/ERC1155_ABI.json";
+import Mercat_ABI from "../src/web3/ABIs/Mercat_ABI.json";
 import { CreatorsRanking } from "./Pages/CreatorsRanking";
 import { ArtistsListing } from "./Pages/ArtistsRanking";
 
@@ -88,7 +88,7 @@ function App() {
           const accounts = await web3.eth.getAccounts();
           setAccount(accounts[0]);
           const contract = new web3.eth.Contract(
-            MercatABI,
+            Mercat_ABI,
             MERCAT_CONTRACT_ADDRESS
           );
           setMercatContract(contract);

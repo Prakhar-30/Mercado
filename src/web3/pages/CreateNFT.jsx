@@ -5,8 +5,11 @@ import { useStateContext } from "../../contexts";
 import { motion } from "framer-motion";
 import { getMetadata } from "../../utils/web3Helpers";
 
+// Import your Loader component here
+import Loader from "../../components/Loader";
+
 function CreateNFT() {
-  const { ERC1155_CONTRACT, setERC1155_CONTRACT, account } = useStateContext();
+  const { ERC1155_CONTRACT, account } = useStateContext();
 
   const [loading, setLoading] = useState(false);
   const [ipfsHash, setIpfsHash] = useState("");
@@ -14,7 +17,23 @@ function CreateNFT() {
   const [error, setError] = useState("");
   const [previewImage, setPreviewImage] = useState("");
   const [quantity, setQuantity] = useState(1);
-  const [metadata, setMetadata] =useState({});
+  const [metadata, setMetadata] = useState({});
+
+  const handleMintNFT = async () => {
+    if (metadataHash && account) {
+      setLoading(true);
+      try {
+        await ERC1155_CONTRACT.methods
+          .mintNFT(account, quantity, metadataHash)
+          .send({ from: account });
+        setLoading(false);
+        alert("NFTs Minted successfully!");
+      } catch (error) {
+        setError(error.message);
+        setLoading(false);
+      }
+    }
+  };
 
   useEffect(() => {
     if (metadataHash) {
@@ -23,21 +42,6 @@ function CreateNFT() {
         .catch((error) => setError(error.message));
     }
   }, [metadataHash]);
-  
-
-  const handleMintNFT = async () => {
-    if (metadataHash && account) {
-      setLoading(true);
-      try {
-        await ERC1155_CONTRACT.methods.mintNFT(account,quantity, metadataHash).send({ from: account });
-                setLoading(false);
-                alert("NFTs Minted successfully!");
-      } catch (error) {
-        setError(error.message);
-        setLoading(false);
-      }
-    }
-  };
 
   return (
     <div className="abc bg-gray-900 min-h-screen flex items-center justify-center">
@@ -56,6 +60,7 @@ function CreateNFT() {
             {error && <p className="text-red-500 mb-4">{error}</p>}
             <FileUpload
               ipfsHash={ipfsHash}
+              account={account}
               setIpfsHash={setIpfsHash}
               metadataHash={metadataHash}
               setMetadataHash={setMetadataHash}
@@ -78,17 +83,19 @@ function CreateNFT() {
                   style={{ backgroundColor: "#0000008f" }}
                   disabled={!metadataHash || !account}
                 >
-                  Mint NFT
+                  {loading ? "Minting NFT..." : "Mint NFT"}
                 </motion.button>
               </>
             )}
           </div>
-          <div className="ToBeOnTheRight bg-zinc-800 h-[450px] rounded-3xl flex items-center justify-center">
-            {previewImage && (
+          {!loading?<div className="ToBeOnTheRight bg-zinc-800 h-[450px] rounded-3xl flex items-center justify-center">
+            {previewImage  && (
               <img src={previewImage} alt="Preview" className="max-w-full max-h-full" />
             )}
-          </div>
+          </div>:
+          <Loader />}
         </div>
+        
       </div>
     </div>
   );

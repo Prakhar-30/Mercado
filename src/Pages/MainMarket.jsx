@@ -2,9 +2,12 @@ import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { Navbar } from "../components/Navbar";
 import { cn } from "../utils/cn";
+import { motion } from "framer-motion";
+
 import { BackgroundGradientDemo } from "../components/BackgroundGradientDemo";
 import { Using3dCard } from "../components/Using3dCard";
 import GlowingButton from "../components/GlowingButton";
+import Loader from "../components/Loader";// Import your Loader component
 import { useStateContext } from "../contexts";
 import { getMetadata } from "../utils/web3Helpers";
 import { Gateway_url } from "../../config";
@@ -16,21 +19,40 @@ export function MainMarket() {
   const [selectedImageDetails, setSelectedImageDetails] = useState({
     name: "",
     description: "",
+    price: "",
+    creator: "",
+    owner: "",
+    available: "",
   });
+  const [loading, setLoading] = useState(false); // Loading state
   const location = useLocation();
-  const { ERC1155_CONTRACT } = useStateContext();
+  const { ERC1155_CONTRACT, MercatContract, account } = useStateContext();
   const [metadata, setMetadata] = useState([]);
   const [filteredMetadata, setFilteredMetadata] = useState([]);
-  console.log(metadata);
-  console.log(filteredMetadata);
+  const [purchaseAmount, setPurchaseAmount] = useState(1); // State to hold the purchase amount
+
   useEffect(() => {
     const fetchMetadata = async () => {
       try {
         const hashes = await ERC1155_CONTRACT.methods.getAll().call();
         const metadataArray = [];
-        for (let i = 1; i < hashes.length; i++) {
+        for (let i = 0; i < hashes.length; i++) {
           const data = await getMetadata(Gateway_url, hashes[i]);
-          metadataArray.push(data);
+          const token_id = Number(await ERC1155_CONTRACT.methods.getTokenIdByURI(hashes[i]).call());
+          const ownerOfThisNFT = await ERC1155_CONTRACT.methods.tokenIDtoHolderFn(token_id).call();
+          const NFTamount = Number(await ERC1155_CONTRACT.methods.balanceOf(ownerOfThisNFT[0], token_id).call());
+          const nftDetails = {
+            name: data.name,
+            description: data.description,
+            price: data.price,
+            theme: data.theme,
+            image: data.image,
+            creator: data.creator,
+            owner: ownerOfThisNFT[0],
+            available: NFTamount,
+          };
+
+          metadataArray.push(nftDetails);
         }
         setMetadata(metadataArray);
       } catch (error) {
@@ -48,7 +70,6 @@ export function MainMarket() {
     if (theme) {
       filteredData = metadata.filter((item) => item.theme === theme);
     } else {
-      // If no theme is specified or metadata is not loaded yet
       filteredData = [...metadata];
     }
     setFilteredMetadata(filteredData);
@@ -72,13 +93,44 @@ export function MainMarket() {
     }
   }, [location.search, metadata]);
 
-  const handleImageClick = (image) => {
+  const handleImageClick = async (image) => {
     setSelectedImage(image);
+
     const selectedMetadata = filteredMetadata.find((item) => item.image === image);
+
+    // Update selected image details state
     setSelectedImageDetails({
       name: selectedMetadata?.name || "",
       description: selectedMetadata?.description || "",
+      price: selectedMetadata?.price || "",
+      creator: selectedMetadata?.creator || "",
+      owner: selectedMetadata?.owner || "",
+      available: selectedMetadata?.available || "",
     });
+  };
+
+  const handleBuy = async () => {
+    if (selectedImageDetails.price && selectedImageDetails.owner) {
+      try {
+        setLoading(true); // Start loading
+
+        const amount = parseInt(purchaseAmount);
+        const calculatedPrice = selectedImageDetails.price * amount;
+
+        await MercatContract.methods
+          .transferWithInfiniteAllowance(selectedImageDetails.owner, calculatedPrice)
+          .send({ from: account });
+
+        const token_id = Number(await ERC1155_CONTRACT.methods.HoldertoTokenIDFn(selectedImageDetails.owner).call());
+        await ERC1155_CONTRACT.methods.transfer(account, token_id, amount).send({ from: selectedImageDetails.owner });
+
+        setLoading(false); // Stop loading
+        alert("Purchase successful!");
+      } catch (error) {
+        setLoading(false); // Stop loading on error
+        console.error("Error purchasing NFT:", error);
+      }
+    }
   };
 
   return (
@@ -89,20 +141,6 @@ export function MainMarket() {
       )}
       style={backgroundImage ? { backgroundImage: `url(${backgroundImage})` } : {}}
     >
-      <style>
-        {`
-          /* Hide scrollbar for Chrome, Safari and Opera */
-          .MarketSectionContainer::-webkit-scrollbar {
-            display: none;
-          }
-
-          /* Hide scrollbar for IE, Edge and Firefox */
-          .MarketSectionContainer {
-            -ms-overflow-style: none; /* IE and Edge */
-            scrollbar-width: none; /* Firefox */
-          }
-        `}
-      </style>
       <div className="absolute inset-0 bg-black opacity-75 overflow-hidden"></div>
       <Navbar />
       <div className="p-0 size-72 absolute left-0 top-0 ml-0">
@@ -137,47 +175,70 @@ export function MainMarket() {
         </div>
 
         <div
-  className="CartSection overflow-x-hidden p-0 ml-1 mr-16 border border-gray-500 rounded-md"
-  style={{
-    height: "650px",
-    width: "450px",
-    boxShadow: "0 4px 6px rgba(255, 255, 255, 0.8)",
-    overflowY: "scroll", // Enable vertical scrollbar
-    scrollbarWidth: "thin", // Thin scrollbar
-    scrollbarColor: "rgba(0, 0, 0, 0.5) rgba(255, 255, 255, 0.3)", // Scrollbar colors
-  }}
->
+          className="CartSection overflow-x-hidden p-0 ml-1 mr-16 border border-gray-500 rounded-md"
+          style={{
+            height: "650px",
+            width: "450px",
+            boxShadow: "0 4px 6px rgba(255, 255, 255, 0.8)",
+            overflowY: "scroll",
+            scrollbarWidth: "thin",
+            scrollbarColor: "rgba(0, 0, 0, 0.5) rgba(255, 255, 255, 0.3)",
+          }}
+        >
           <div className="flex justify-center items-center mt-4">
             <p className="text-neutral-200 text-2xl">CART</p>
           </div>
           <div className="flex justify-center">
             {selectedImage && <Using3dCard src={selectedImage} title="NFT" />}
           </div>
+          {selectedImage &&
+          <>
           <div className="Details">
             <div className="text-neutral-200 text-2xl mb-4">
-              Name:
-              <span className="text-neutral-500">{selectedImageDetails.name}</span>
+              Name: <span className="text-neutral-500">{selectedImageDetails?.name}</span>
             </div>
             <div className="text-neutral-200 text-2xl mt-4 mb-4">
-              Description:
-              <span className="text-neutral-500">{selectedImageDetails.description}</span>
+              Description: <span className="text-neutral-500">{selectedImageDetails?.description}</span>
             </div>
             <div className="text-neutral-200 text-2xl mt-4 mb-4">
-              Price:
-              <span className="text-neutral-500">{selectedImageDetails.price || ""}</span>
+              Price: <span className="text-neutral-500">{selectedImageDetails?.price} MEC</span>
             </div>
             <div className="text-neutral-200 text-2xl mt-4 mb-4">
-              Creator:
-              <span className="text-neutral-500">{selectedImageDetails.creator || ""}</span>
+              Amount: <span className="text-neutral-500">{selectedImageDetails?.available}</span>
             </div>
             <div className="text-neutral-200 text-2xl mt-4 mb-4">
-              Owner:
-              <span className="text-neutral-500">{selectedImageDetails.owner || ""}</span>
+              Creator: <span className="text-neutral-500">{selectedImageDetails?.creator}</span>
+            </div>
+            <div className="text-neutral-200 text-2xl mt-4 mb-4">
+              Owner: <span className="text-neutral-500">{selectedImageDetails?.owner}</span>
             </div>
           </div>
-          <div className="Purchase flex justify-center items-center">
-            <GlowingButton text="Make Purchase" />
+
+          <div className="AmountInput flex justify-center items-center mt-4">
+            <input
+              type="number"
+              value={purchaseAmount}
+              onChange={(e) => setPurchaseAmount(e.target.value)}
+              className="text-black w-full px-3 py-2 border border-gray-300 rounded"
+              placeholder="Enter amount"
+              style={{ backgroundColor: "#333", color: "#fff", border: "1px solid #555", borderRadius: "4px", padding: "8px", width: "70%" }}
+            />
           </div>
+          <div className="Purchase flex justify-center items-center mt-4">
+            {loading ? (
+              <Loader /> // Render Loader while loading is true
+            ) : (
+                <motion.button   
+                whileHover={{
+                  boxShadow: "0 0 10px 3px rgba(255, 255, 255, 0.7)",
+                }}
+                className="block my-4 p-2 text-white rounded-2xl"
+                style={{ backgroundColor: "#92199f" }}
+                onClick={handleBuy}>Make Purchase</motion.button>
+              
+            )}
+          </div>
+          </>}
         </div>
       </div>
     </div>
