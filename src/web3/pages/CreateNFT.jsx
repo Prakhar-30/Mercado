@@ -93,7 +93,15 @@ function CreateNFT() {
               <img src={previewImage} alt="Preview" className="max-w-full max-h-full" />
             )}
           </div>:
-          <Loader />}
+        //   <Loader />
+          <div className="text-slate-100 flex justify-center items-center">
+          <div
+            className="inline-block h-32 w-32 animate-spin rounded-full border-8 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+            role="status"
+          ></div>
+          {/* <span className="text-2xl">Loading...</span> */}
+        </div>
+          }
         </div>
         
       </div>
