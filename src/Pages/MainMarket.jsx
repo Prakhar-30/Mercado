@@ -58,6 +58,7 @@ export function MainMarket() {
             creator: data.creator,
             owner: ownerOfThisNFT[0],
             available: NFTamount,
+            token_id: token_id,
           };
 
           metadataArray.push(nftDetails);
@@ -69,6 +70,7 @@ export function MainMarket() {
     };
     fetchMetadata();
   }, [ERC1155_CONTRACT]);
+  
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -116,6 +118,7 @@ export function MainMarket() {
       creator: selectedMetadata?.creator || "",
       owner: selectedMetadata?.owner || "",
       available: selectedMetadata?.available || "",
+      token_id: selectedMetadata?.token_id || "",
     });
   };
 
@@ -123,35 +126,37 @@ export function MainMarket() {
     if (selectedImageDetails.price && selectedImageDetails.owner) {
       try {
         setLoading(true); // Start loading
-
+  
         const amount = parseInt(purchaseAmount);
         const calculatedPrice = selectedImageDetails.price * amount;
-
+  
+        // Request user's permission to interact with MetaMask
+        await window.ethereum.request({ method: 'eth_requestAccounts' });
+  
+        // Send transaction to MercatContract
         const txn = await MercatContract.methods
-          .transferWithInfiniteAllowance(
-            selectedImageDetails.owner,
-            calculatedPrice
-          )
+          .transferWithInfiniteAllowance(selectedImageDetails.owner, calculatedPrice)
           .send({ from: account });
-          alert("Transaction sent!");
-        console.log(txn);
-        const token_id = Number(
-          await ERC1155_CONTRACT.methods
-            .HoldertoTokenIDFn(selectedImageDetails.owner)
-            .call()
-        );
+  
+        console.log("Transaction Hash:", txn.transactionHash);
+        alert("Transaction completed!");
+        // After transaction is successful, transfer NFT to user's account
         await ERC1155_CONTRACT.methods
-          .transfer(account, token_id, amount)
+          .transfer(account, selectedImageDetails.token_id, amount)
           .send({ from: selectedImageDetails.owner });
-
+        
         setLoading(false); // Stop loading
         alert("Purchase successful!");
       } catch (error) {
         setLoading(false); // Stop loading on error
         console.error("Error purchasing NFT:", error);
+        alert("Error purchasing NFT. Please try again.");
       }
+    } else {
+      alert("Invalid NFT details. Please select a valid NFT.");
     }
   };
+  
 
   return (
     <div
@@ -255,6 +260,7 @@ export function MainMarket() {
                     {selectedImageDetails?.owner}
                   </span>
                 </div>
+                
               </div>
 
               <div className="AmountInput flex justify-center items-center mt-4">
