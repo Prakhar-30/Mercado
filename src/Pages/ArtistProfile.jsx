@@ -88,10 +88,10 @@ const ArtistProfile = () => {
         </div>
       </div>
 
-      <div className='mt-[50px] flex flex-row'>
-        <div className='px-8 py-4 rounded-md w-[25rem] h-[30rem] ml-[-30rem] mt-[3rem]'>
+      <div className="mt-[50px] flex flex-row ">
+        <div className="px-8 py-4 rounded-md w-[25rem] h-[30rem] mr-24 mt-[3rem]">
           <AnimatedText>
-            <div className='mt-[1rem] list-decimal text-slate-400 px-10'>
+            <div className="mt-[1rem] list-decimal text-slate-400 px-10">
               <p>
                 <strong>Highest Sold NFT:</strong> $XX,XXX
               </p>
@@ -104,15 +104,19 @@ const ArtistProfile = () => {
             </div>
           </AnimatedText>
         </div>
-
-        <div className='flex flex-wrap mt-4'>
-          {metadata.map((item, index) => (
-            <div key={index} className='ml-60 rounded-md w-[17rem] h-[18rem] mb-[40px] mr-6 flex flex-wrap'>
-              <AnimatedText>
-                <div>
-                  <img src={item.image} className='h-[10rem] w-[30rem] relative' alt={item.name} />
-                </div>
-                <div className='text-[12px] text-center text-slate-400'>
+        <AnimatedText>
+          <div className=" flex items-center mt-4  flex-between">
+            {metadata.map((item, index) => (
+              <div
+                key={index}
+                className=" rounded-md w-72 h-80 mb-4 flex flex-col items-center"
+              >
+                <img
+                  src={item.image}
+                  className="h-52 w-52 mb-4 rounded"
+                  alt={item.name}
+                />
+                <div className="text-[12px] text-center text-slate-400">
                   <p>
                     <strong>Name:</strong> {item.name}
                   </p>
@@ -120,19 +124,17 @@ const ArtistProfile = () => {
                     <strong>Description:</strong> {item.description}
                   </p>
                   <p>
-                    <strong>Creator:</strong> {item.creator}
+                    <strong>Creator:</strong>{item.creator}
                   </p>
-                  <p>
-                    <strong>Owner:</strong> {item.owner}
-                  </p>
+
                   <p>
                     <strong>Available:</strong> {item.available}
                   </p>
                 </div>
-              </AnimatedText>
-            </div>
-          ))}
-        </div>
+              </div>
+            ))}
+          </div>
+        </AnimatedText>
       </div>
     </div>
   );
