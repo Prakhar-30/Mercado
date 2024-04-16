@@ -133,6 +133,7 @@ export function MainMarket() {
             calculatedPrice
           )
           .send({ from: account });
+          alert("Transaction sent!");
         console.log(txn);
         const token_id = Number(
           await ERC1155_CONTRACT.methods
