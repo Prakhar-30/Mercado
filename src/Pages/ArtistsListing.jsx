@@ -81,7 +81,7 @@ export function ArtistsListing() {
         "bg-no-repeat"
       )}
       style={{
-        backgroundImage: `url("/public/CreatorRanking.jpg")`,
+        backgroundImage: `url("/public/ArtistRanking.jpg")`,
       }}
     >
       <div className="absolute inset-0 bg-black opacity-75 overflow-hidden"></div>
@@ -128,6 +128,9 @@ export function ArtistsListing() {
             highestSold={artist.highestSold}
           />
         ))}
+      </div>
+      <div className="absolute right-0 bottom-10">
+        <img src="/logoHere2.png" alt="" />
       </div>
     </div>
   );

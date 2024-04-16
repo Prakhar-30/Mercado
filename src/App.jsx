@@ -20,7 +20,7 @@ import { ERC1155_CONTRACT_ADDRESS, MERCAT_CONTRACT_ADDRESS } from "./web3/consta
 import ERC1155_ABI from "../src/web3/ABIs/ERC1155_ABI.json";
 import Mercat_ABI from "../src/web3/ABIs/Mercat_ABI.json";
 import { CreatorsRanking } from "./Pages/CreatorsRanking";
-import { ArtistsListing } from "./Pages/ArtistsRanking";
+import { ArtistsListing } from "./Pages/ArtistsListing";
 
 
 export const client = createThirdwebClient({

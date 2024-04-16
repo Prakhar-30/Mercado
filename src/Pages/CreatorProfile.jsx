@@ -103,7 +103,7 @@ const CreatorProfile = () => {
       )}
     >
       <div className="justify-center items-center mt-[8rem] text-slate-400 text-8xl">
-        ARTIST
+        Creator
       </div>
 
       <div className="flex items-center mt-[4rem]">
