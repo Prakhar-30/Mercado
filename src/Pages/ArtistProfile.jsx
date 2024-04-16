@@ -61,34 +61,77 @@ const ArtistProfile = () => {
   };
 
   return (
-    <div className={cn('relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-slate-950 w-full')}>
-      <div className='justify-center items-center mt-[8rem] text-slate-400 text-8xl'>
+    <>
+    <style>
+        {`
+          /* Hide scrollbar but allow scrolling */
+          ::-webkit-scrollbar {
+            width: 10px; /* Width of the scrollbar */
+            display: none; /* Hide scrollbar */
+          }
+
+          /* Track */
+          ::-webkit-scrollbar-track {
+            background: #f1f1f1; 
+          }
+          
+          /* Handle */
+          ::-webkit-scrollbar-thumb {
+            background: #888; 
+            border-radius: 5px; 
+          }
+
+          /* Handle on hover */
+          ::-webkit-scrollbar-thumb:hover {
+            background: #555; 
+          }
+        `}
+      </style>
+
+    <div
+      className={cn(
+        "relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-slate-950 w-full"
+      )}
+    >
+      <div className="justify-center items-center mt-[8rem] text-slate-400 text-8xl">
         ARTIST
       </div>
 
-      <div className='flex items-center mt-[4rem]'>
-        <div className='w-[20rem] h-[20rem] border-2 bg-white rounded-full mr-[60px] translate-x-[8rem] translate-y-[1rem]'>
+      <div className="flex items-center mt-[4rem]">
+        <div className="w-[20rem] h-[20rem] border-2 bg-white rounded-full mr-[60px] translate-x-[8rem] translate-y-[1rem]">
           {profileImage ? (
-            <img src={profileImage} className='w-full h-full rounded-full object-cover' alt='Profile' />
+            <img
+              src={profileImage}
+              className="w-full h-full rounded-full object-cover"
+              alt="Profile"
+            />
           ) : (
-            <div className='flex mt-[9rem] ml-[4rem]'>
-              <input type='file' accept='image/*' onChange={handleImageChange} />
+            <div className="flex mt-[9rem] ml-[4rem]">
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+              />
             </div>
           )}
         </div>
 
-        <div className='px-[10rem] py-[2rem] rounded-md w-[80rem] h-[20rem] mr-0'>
+        <div className="px-[10rem] py-[2rem] rounded-md w-[80rem] h-[20rem] mr-0">
           <AnimatedText>
-            <ol className='mt-[1rem] ml-[2rem] list-decimal text-slate-400'>
-              <li className='mb-2 line-clamp-1 line-through'>Upload Your Profile</li>
-              <li className='mb-2 line-clamp-1 line-through'>Tell us about yourself</li>
-              <li className='mb-2 line-clamp-1'>Fill your achievements</li>
+            <ol className="mt-[1rem] ml-[2rem] list-decimal text-slate-400">
+              <li className="mb-2 line-clamp-1 line-through">
+                Upload Your Profile
+              </li>
+              <li className="mb-2 line-clamp-1 line-through">
+                Tell us about yourself
+              </li>
+              <li className="mb-2 line-clamp-1">Fill your achievements</li>
             </ol>
           </AnimatedText>
         </div>
       </div>
 
-      <div className="mt-[50px] flex flex-row ">
+      <div className="mt-[50px] flex  ">
         <div className="px-8 py-4 rounded-md w-[25rem] h-[30rem] mr-24 mt-[3rem]">
           <AnimatedText>
             <div className="mt-[1rem] list-decimal text-slate-400 px-10">
@@ -105,15 +148,15 @@ const ArtistProfile = () => {
           </AnimatedText>
         </div>
         <AnimatedText>
-          <div className=" flex items-center mt-4  flex-between">
+          <div className=" flex items-center mt-4 w-[65rem] h-[35rem] overflow-y-scroll flex-between flex-wrap justify-evenly space-y-6 pt-8">
             {metadata.map((item, index) => (
               <div
                 key={index}
-                className=" rounded-md w-72 h-80 mb-4 flex flex-col items-center"
+                className=" rounded-md w-72 h-80 mb-4 flex flex-col items-center "
               >
                 <img
                   src={item.image}
-                  className="h-52 w-52 mb-4 rounded"
+                  className="h-52 w-52 mb-4 rounded "
                   alt={item.name}
                 />
                 <div className="text-[12px] text-center text-slate-400">
@@ -122,9 +165,6 @@ const ArtistProfile = () => {
                   </p>
                   <p>
                     <strong>Description:</strong> {item.description}
-                  </p>
-                  <p>
-                    <strong>Creator:</strong>{item.creator}
                   </p>
 
                   <p>
@@ -137,6 +177,7 @@ const ArtistProfile = () => {
         </AnimatedText>
       </div>
     </div>
+    </>
   );
 };
 
