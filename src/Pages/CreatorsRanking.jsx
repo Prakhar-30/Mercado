@@ -92,6 +92,33 @@ export function CreatorsRanking() {
   }, [initialCreators, searchTerm, sortOption]);
 
   return (
+    <>
+        <style>
+        {`
+          /* Hide scrollbar but allow scrolling */
+          ::-webkit-scrollbar {
+            width: 10px; /* Width of the scrollbar */
+            display: none; /* Hide scrollbar */
+          }
+
+          /* Track */
+          ::-webkit-scrollbar-track {
+            background: #f1f1f1; 
+          }
+          
+          /* Handle */
+          ::-webkit-scrollbar-thumb {
+            background: #888; 
+            border-radius: 5px; 
+          }
+
+          /* Handle on hover */
+          ::-webkit-scrollbar-thumb:hover {
+            background: #555; 
+          }
+        `}
+      </style>
+
     <div
       className={cn(
         "relative overflow-hidden flex min-h-screen flex-col items-center justify-center z-[5000] bg-slate-950 w-full pt-20",
@@ -151,6 +178,10 @@ export function CreatorsRanking() {
           />
         ))}
       </div>
+      <div className="absolute right-0 bottom-10">
+        <img src="/logoHere2.png" alt="" />
+      </div>
     </div>
+    </>
   );
 }
