@@ -81,7 +81,7 @@ export function ArtistsListing() {
         "bg-no-repeat"
       )}
       style={{
-        backgroundImage: url("/public/ArtistRanking.jpg"),
+        backgroundImage: url("/ArtistRanking.jpg"),
       }}
     >
       <div className="absolute inset-0 bg-black opacity-75 overflow-hidden"></div>
