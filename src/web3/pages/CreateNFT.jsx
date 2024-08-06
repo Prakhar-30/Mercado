@@ -5,9 +5,6 @@ import { useStateContext } from "../../contexts";
 import { motion } from "framer-motion";
 import { getMetadata } from "../../utils/web3Helpers";
 
-// Import your Loader component here
-import Loader from "../../components/Loader";
-
 function CreateNFT() {
   const { ERC1155_CONTRACT, account } = useStateContext();
 
@@ -24,7 +21,7 @@ function CreateNFT() {
       setLoading(true);
       try {
         await ERC1155_CONTRACT.methods
-          .mintNFT(account, quantity, metadataHash)
+          .mint(account, quantity, metadataHash)
           .send({ from: account });
         setLoading(false);
         alert("NFTs Minted successfully!");
@@ -42,7 +39,8 @@ function CreateNFT() {
         .catch((error) => setError(error.message));
     }
   }, [metadataHash]);
-
+console.log("metadata",metadata)
+console.log("metadataHash",metadataHash)
   return (
     <div className="abc bg-gray-900 min-h-screen flex items-center justify-center">
       <div

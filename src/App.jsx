@@ -52,7 +52,7 @@ window.ethereum.on("chainChanged", (chainId) => {
 
 function App() {
 
-  const { ERC1155_CONTRACT, setERC1155_CONTRACT, account, setAccount,MercatContract,setMercatContract } = useStateContext();
+  const { setERC1155_CONTRACT, setAccount,setMercatContract } = useStateContext();
 
   useEffect(() => {
     // Check MetaMask availability and initialize web3
@@ -110,7 +110,7 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<LampDemo />} />
-          <Route path="/CreatorsRanking" element={<CreatorsRanking />} />
+          {/* <Route path="/CreatorsRanking" element={<CreatorsRanking />} /> */}
           <Route path="/ArtistsListing" element={<ArtistsListing />} />
           <Route path="/MainMarket" element={<MainMarket />} />
           <Route path="/Marketplace" element={<Marketplace />} />
@@ -119,13 +119,13 @@ function App() {
           <Route path="/contact" element={<LampDemo />} />
           <Route path="/shop" element={<Shop />} />
           <Route path="/createNFT" element={<CreateNFT />} />
-          <Route path="/creatorProfile" element={<CreatorProfile />} />
+          {/* <Route path="/creatorProfile" element={<CreatorProfile />} /> */}
           <Route path="/artistProfile" element={<ArtistProfile />} />
         </Routes>
 
         <ConnectWalletButton />
 
-        <ConnectWalletButton />
+        
       </div>
     </ThirdwebProvider>
   );

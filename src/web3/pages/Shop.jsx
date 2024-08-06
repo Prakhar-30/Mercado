@@ -1,8 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Web3 from "web3";
-import { useContractEvents } from "thirdweb/react";
-import { MERCAT_CONTRACT_ADDRESS } from "../constants";
-import MercatABI from "../ABIs/Mercat_ABI.json";
 import { motion } from "framer-motion";
 import { BackgroundGradientDemo } from "../../components/BackgroundGradientDemo";
 import Spline from "@splinetool/react-spline";
@@ -11,13 +7,10 @@ import { useStateContext } from "../../contexts";
 
 const Shop = () => {
   const [ethers, setEthers] = useState("");
-
   const [errorMessage, setErrorMessage] = useState("");
-  const [MEC, setMEC] = useState(null);
-  
   const [balance, setBalance] = useState(null);
 
-  const { MercatContract, account } = useStateContext();
+  const { MercatContract, account,ERC1155_CONTRACT } = useStateContext();
   
 
   const handlePurchase = async () => {
@@ -29,11 +22,9 @@ const Shop = () => {
     }
 
     // Add your purchase logic here
-    const tsx = await MercatContract.methods
-      .buyTokens()
+    const tsx = await ERC1155_CONTRACT.methods.
+    convertETHToMERCAT()
       .send({ from: account, value: ethers * 1000000000000000000 });
-    console.log(tsx);
-
     // Reset form fields
     setEthers("");
 
@@ -44,16 +35,13 @@ const Shop = () => {
   useEffect(() => {
     const getBalance = async () => {
       if (account && MercatContract) {
-        console.log("account in useEffect", account);
         const balance = await MercatContract.methods.balanceOf(account).call();
-        console.log("balance in useEffect", balance);
-        setBalance(Number(balance));
+        setBalance(Number(balance)/1000000000000000000);
       }
     };
     getBalance();
   }, [account, MercatContract]);
 
-  console.log("balance", balance);
 
   return (
     <>
@@ -66,7 +54,7 @@ const Shop = () => {
       <div className="bg-gray-800 p-2 rounded-lg shadow-lg size-80">
         <h1 className="text-2xl text-slate-100 font-semibold mt-6 mb-2">Buy Our Platform Token</h1>
         {errorMessage && <p className="text-red-500">{errorMessage}</p>}
-        <h2 className="mb-4 text-slate-500">Price: 0.001 = 100 MEC</h2>
+        <h2 className="mb-4 text-slate-500">Price: 0.001 = 1 MEC</h2>
 
         <h2 className="text-slate-500">Balance: {balance} MEC</h2>
         
