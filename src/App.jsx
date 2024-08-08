@@ -1,3 +1,6 @@
+/* eslint-disable react-refresh/only-export-components */
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-unused-vars */
 import React, { useEffect } from "react";
 import { ThirdwebProvider } from "thirdweb/react";
 import { LampDemo } from "./components/LampDemo";
@@ -21,15 +24,13 @@ import ERC1155_ABI from "../src/web3/ABIs/ERC1155_ABI.json";
 import Mercat_ABI from "../src/web3/ABIs/Mercat_ABI.json";
 import { CreatorsRanking } from "./Pages/CreatorsRanking";
 import { ArtistsListing } from "./Pages/ArtistsListing";
+import ViewRequest from "./Pages/ViewRequest";
+
 
 
 export const client = createThirdwebClient({
   clientId: "279bdbf9028501a51bf797ada51321ac",
 });
-
-
-
-
 
 // connect to your contract
 // export const contract = getContract({
@@ -121,6 +122,7 @@ function App() {
           <Route path="/createNFT" element={<CreateNFT />} />
           {/* <Route path="/creatorProfile" element={<CreatorProfile />} /> */}
           <Route path="/artistProfile" element={<ArtistProfile />} />
+          <Route path="/ViewRequest" element={<ViewRequest/>}/>
         </Routes>
 
         <ConnectWalletButton />

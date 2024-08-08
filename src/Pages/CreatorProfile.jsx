@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import  { useState, useEffect } from "react";
 import { cn } from "../utils/cn";
-import { BackgroundGradientDemo } from "../components/BackgroundGradientDemo";
+// import { BackgroundGradientDemo } from "../components/BackgroundGradientDemo";
 import { useStateContext } from "../contexts";
 import { getMetadata } from "../utils/web3Helpers";
 import { Gateway_url } from "../../config";
